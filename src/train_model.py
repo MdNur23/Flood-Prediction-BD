@@ -2,7 +2,9 @@ import pandas as pd
 
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, classification_report
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import accuracy_score
 
 # Load dataset
 df = pd.read_csv("data/processed/flood_dataset.csv")
@@ -21,19 +23,31 @@ X_train, X_test, y_train, y_test = train_test_split(
     random_state=42
 )
 
-# Train model
-model = DecisionTreeClassifier(random_state=42)
-model.fit(X_train, y_train)
+# Models
+models = {
+    "Decision Tree": DecisionTreeClassifier(random_state=42),
+    "Random Forest": RandomForestClassifier(random_state=42),
+    "Logistic Regression": LogisticRegression(max_iter=1000)
+}
 
-# Prediction
-y_pred = model.predict(X_test)
-
-# Results
 print("=" * 50)
-print("Decision Tree Results")
+print("Flood Prediction Model Comparison")
 print("=" * 50)
 
-print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
+results = {}
 
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
+for name, model in models.items():
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+
+    accuracy = accuracy_score(y_test, y_pred)
+    results[name] = accuracy
+
+    print(f"{name:<22} Accuracy: {accuracy:.4f}")
+
+print("=" * 50)
+
+best_model = max(results, key=results.get)
+
+print(f"Best Model : {best_model}")
+print(f"Accuracy   : {results[best_model]:.4f}")
