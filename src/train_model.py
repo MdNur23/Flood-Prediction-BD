@@ -29,11 +29,11 @@ model.fit(X_train, y_train)
 y_pred = model.predict(X_test)
 
 # Results
-print("= - train_model.py:32" * 50)
-print("Decision Tree Results - train_model.py:33")
-print("= - train_model.py:34" * 50)
+print("=" * 50)
+print("Decision Tree Results")
+print("=" * 50)
 
-print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f} - train_model.py:36")
+print(f"Accuracy: {accuracy_score(y_test, y_pred):.4f}")
 
-print("\nClassification Report: - train_model.py:38")
+print("\nClassification Report:")
 print(classification_report(y_test, y_pred))
