@@ -1,10 +1,16 @@
 import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import (
+    accuracy_score,
+    confusion_matrix,
+    classification_report,
+)
 
 # Load dataset
 df = pd.read_csv("data/processed/flood_dataset.csv")
@@ -33,7 +39,6 @@ models = {
 print("=" * 50)
 print("Flood Prediction Model Comparison")
 print("=" * 50)
-
 results = {}
 
 for name, model in models.items():
@@ -41,9 +46,39 @@ for name, model in models.items():
     y_pred = model.predict(X_test)
 
     accuracy = accuracy_score(y_test, y_pred)
+    cm = confusion_matrix(y_test, y_pred)
+
     results[name] = accuracy
 
-    print(f"{name:<22} Accuracy: {accuracy:.4f}")
+    print(f"\n{name}")
+    print("-" * 30)
+    print(f"Accuracy: {accuracy:.4f}")
+
+    print("\nConfusion Matrix:")
+    print(cm)
+
+    print("\nClassification Report:")
+    print(classification_report(y_test, y_pred))
+    plt.figure(figsize=(5, 4))
+
+    sns.heatmap(
+        cm,
+        annot=True,
+        fmt="d",
+        cmap="Blues",
+        xticklabels=["No Flood", "Flood"],
+        yticklabels=["No Flood", "Flood"]
+    )
+
+    plt.xlabel("Predicted")
+    plt.ylabel("Actual")
+    plt.title(f"{name} Confusion Matrix")
+
+    plt.savefig(
+        f"data/processed/{name.lower().replace(' ', '_')}_confusion_matrix.png"
+    )
+
+    plt.close()
 
 print("=" * 50)
 
