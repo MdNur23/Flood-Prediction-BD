@@ -36,6 +36,7 @@ models = {
     "Logistic Regression": LogisticRegression(max_iter=1000)
 }
 
+
 print("=" * 50)
 print("Flood Prediction Model Comparison")
 print("=" * 50)
@@ -79,6 +80,29 @@ for name, model in models.items():
     )
 
     plt.close()
+
+for name, model in models.items():
+    ...
+    plt.close()
+
+
+dt_model = models["Decision Tree"]
+
+feature_names = X.columns
+importances = dt_model.feature_importances_
+
+plt.figure(figsize=(6, 4))
+plt.bar(feature_names, importances)
+
+plt.title("Decision Tree Feature Importance")
+plt.xlabel("Features")
+plt.ylabel("Importance")
+
+plt.tight_layout()
+plt.savefig("data/processed/feature_importance.png")
+plt.close()
+
+
 
 print("=" * 50)
 
