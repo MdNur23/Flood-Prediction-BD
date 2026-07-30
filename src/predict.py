@@ -2,7 +2,7 @@ import joblib
 import pandas as pd
 
 # Load trained model
-model = joblib.load("models/flood_model.pkl")
+model = joblib.load("models/flood_prediction_model.pkl")
 
 print("=" * 50)
 print("Flood Prediction System")
@@ -26,8 +26,6 @@ prediction = model.predict(data)
 print("\n" + "=" * 50)
 
 if prediction[0] == 1:
-    print("Flood Risk: YES")
+    print("Flood Risk Level : HIGH")
 else:
-    print("Flood Risk: NO")
-
-print("=" * 50)
+    print("Flood Risk Level : LOW")
