@@ -14,6 +14,8 @@ from sklearn.metrics import (
     precision_score,
     recall_score,
     f1_score,
+    roc_curve,
+    auc,
 )
 
 # Load dataset
@@ -147,3 +149,33 @@ performance_df.to_csv(
 )
 
 print("\nModel performance saved to results/model_performance.csv")
+
+# ROC Curve for Random Forest
+
+rf_model = models["Random Forest"]
+
+y_prob = rf_model.predict_proba(X_test)[:, 1]
+
+fpr, tpr, _ = roc_curve(y_test, y_prob)
+roc_auc = auc(fpr, tpr)
+
+plt.figure(figsize=(6, 5))
+
+plt.plot(
+    fpr,
+    tpr,
+    label=f"Random Forest (AUC = {roc_auc:.3f})"
+)
+
+plt.plot([0, 1], [0, 1], linestyle="--")
+
+plt.xlabel("False Positive Rate")
+plt.ylabel("True Positive Rate")
+plt.title("ROC Curve")
+plt.legend()
+
+plt.tight_layout()
+plt.savefig("results/roc_curve.png")
+plt.close()
+
+print(f"\nROC AUC Score : {roc_auc:.4f}")
