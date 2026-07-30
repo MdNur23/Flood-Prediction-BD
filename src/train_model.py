@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from sklearn.model_selection import train_test_split
+from sklearn.model_selection import cross_val_score
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
@@ -10,10 +11,16 @@ from sklearn.metrics import (
     accuracy_score,
     confusion_matrix,
     classification_report,
+    precision_score,
+    recall_score,
+    f1_score,
 )
 
 # Load dataset
 df = pd.read_csv("data/processed/flood_dataset.csv")
+
+print("\nDataset Shape:", df.shape)
+print(df["Flood_Risk"].value_counts())
 
 # Features
 X = df[["Temperature_C", "Rainfall_mm", "Humidity_%"]]
@@ -41,6 +48,7 @@ print("=" * 50)
 print("Flood Prediction Model Comparison")
 print("=" * 50)
 results = {}
+performance = []
 
 for name, model in models.items():
     model.fit(X_train, y_train)
@@ -50,6 +58,14 @@ for name, model in models.items():
     cm = confusion_matrix(y_test, y_pred)
 
     results[name] = accuracy
+
+    performance.append({
+    "Model": name,
+    "Accuracy": accuracy,
+    "Precision": precision_score(y_test, y_pred),
+    "Recall": recall_score(y_test, y_pred),
+    "F1-Score": f1_score(y_test, y_pred),
+})
 
     print(f"\n{name}")
     print("-" * 30)
@@ -102,6 +118,17 @@ plt.tight_layout()
 plt.savefig("data/processed/feature_importance.png")
 plt.close()
 
+print("\nCross Validation Results")
+print("-" * 30)
+
+for name, model in models.items():
+    scores = cross_val_score(model, X, y, cv=5)
+
+    print(f"{name}")
+    print(f"Scores : {scores}")
+    print(f"Mean Accuracy : {scores.mean():.4f}")
+    print(f"Std Dev : {scores.std():.4f}\n")
+
 
 
 print("=" * 50)
@@ -110,3 +137,13 @@ best_model = max(results, key=results.get)
 
 print(f"Best Model : {best_model}")
 print(f"Accuracy   : {results[best_model]:.4f}")
+
+# Save model performance to CSV
+performance_df = pd.DataFrame(performance)
+
+performance_df.to_csv(
+    "results/model_performance.csv",
+    index=False
+)
+
+print("\nModel performance saved to results/model_performance.csv")
