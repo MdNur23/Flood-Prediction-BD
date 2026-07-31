@@ -11,6 +11,8 @@ st.set_page_config(
 
 # Load trained model
 model = joblib.load("models/flood_prediction_model.pkl")
+if "history" not in st.session_state:
+    st.session_state.history = []
 
 # Sidebar
 st.sidebar.title("Flood Prediction System")
@@ -92,6 +94,14 @@ if st.button("Predict"):
     prediction = model.predict(sample)[0]
     probability = model.predict_proba(sample)[0][1]
 
+    st.session_state.history.append({
+        "Temperature": temperature,
+        "Rainfall": rainfall,
+        "Humidity": humidity,
+        "Risk": "HIGH" if prediction == 1 else "LOW",
+        "Probability": f"{probability * 100:.2f}%"
+    })
+
     st.divider()
     st.subheader("Prediction Result")
     st.caption("The result below is based on the weather conditions you entered.")
@@ -138,3 +148,18 @@ if st.button("Predict"):
     st.caption(
         "This prediction is generated using a Random Forest Machine Learning model trained on historical weather data."
     )
+
+if st.session_state.history:
+    st.markdown("---")
+    st.subheader("📋 Prediction History")
+
+    history_df = pd.DataFrame(st.session_state.history)
+
+    st.dataframe(
+        history_df,
+        use_container_width=True
+    )
+
+    if st.button("🗑️ Clear History"):
+        st.session_state.history = []
+        st.rerun()
