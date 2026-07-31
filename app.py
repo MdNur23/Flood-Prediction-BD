@@ -2,13 +2,20 @@ import streamlit as st
 import joblib
 import pandas as pd
 
+# Page settings
+st.set_page_config(
+    page_title="Flood Prediction System",
+    page_icon="🌊",
+    layout="centered"
+)
+
 # Load trained model
 model = joblib.load("models/flood_prediction_model.pkl")
 
+# Sidebar
 st.sidebar.title("Flood Prediction System")
 
 st.sidebar.markdown("---")
-
 
 st.sidebar.info(
     """
@@ -25,15 +32,9 @@ st.sidebar.info(
     """
 )
 
-# Page settings
-st.set_page_config(
-    page_title="Flood Prediction System",
-    page_icon="🌊",
-    layout="centered"
-)
-
 # Title
 st.title("🌊 Flood Prediction System")
+
 st.markdown(
     """
     Welcome to the **Flood Prediction System**.
@@ -83,13 +84,38 @@ if st.button("Predict"):
 
     if prediction == 1:
         st.error("⚠️ Flood Risk Level: HIGH")
+
+        st.warning(
+            """
+            **Safety Recommendation**
+
+            • Stay alert and monitor weather updates.
+
+            • Avoid low-lying and flood-prone areas.
+
+            • Keep important documents and emergency supplies ready.
+            """
+        )
+
     else:
         st.success("✅ Flood Risk Level: LOW")
+
+        st.info(
+            """
+            **Safety Recommendation**
+
+            • Current weather conditions indicate a low flood risk.
+
+            • Continue monitoring rainfall and weather conditions.
+            """
+        )
 
     st.metric(
         label="Flood Probability",
         value=f"{probability * 100:.2f}%"
     )
+
+    st.progress(float(probability))
 
     st.markdown("---")
 
