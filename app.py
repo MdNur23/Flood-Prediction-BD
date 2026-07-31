@@ -163,3 +163,38 @@ if st.session_state.history:
     if st.button("🗑️ Clear History"):
         st.session_state.history = []
         st.rerun()
+
+
+st.markdown("---")
+st.subheader("📊 Model Performance")
+
+performance_df = pd.read_csv("results/model_performance.csv")
+
+best_model_row = performance_df.loc[
+    performance_df["Accuracy"].idxmax()
+]
+
+metric_col1, metric_col2, metric_col3 = st.columns(3)
+
+with metric_col1:
+    st.metric(
+        "Best Model",
+        best_model_row["Model"]
+    )
+
+with metric_col2:
+    st.metric(
+        "Best Accuracy",
+        f"{best_model_row['Accuracy'] * 100:.2f}%"
+    )
+
+with metric_col3:
+    st.metric(
+        "Best F1-Score",
+        f"{best_model_row['F1-Score'] * 100:.2f}%"
+    )
+
+st.dataframe(
+    performance_df,
+    use_container_width=True
+)
