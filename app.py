@@ -46,26 +46,39 @@ st.markdown(
 st.write("Predict flood risk using weather conditions.")
 
 # Input fields
-temperature = st.number_input(
-    "Temperature (°C)",
-    min_value=-10.0,
-    max_value=60.0,
-    value=25.0
-)
 
-rainfall = st.number_input(
-    "Rainfall (mm)",
-    min_value=0.0,
-    max_value=500.0,
-    value=50.0
-)
+st.subheader("🌦️ Enter Weather Conditions")
+st.write("Provide the current weather values to estimate the flood risk.")
 
-humidity = st.number_input(
-    "Humidity (%)",
-    min_value=0.0,
-    max_value=100.0,
-    value=80.0
-)
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    temperature = st.number_input(
+        "Temperature (°C)",
+        min_value=-10.0,
+        max_value=60.0,
+        value=25.0
+    )
+
+with col2:
+    rainfall = st.number_input(
+        "Rainfall (mm)",
+        min_value=0.0,
+        max_value=500.0,
+        value=50.0
+    )
+
+with col3:
+    humidity = st.number_input(
+        "Humidity (%)",
+        min_value=0.0,
+        max_value=100.0,
+        value=80.0
+    )
+
+st.markdown("---")
+st.subheader("🔍 Flood Risk Prediction")
+
 
 # Prediction
 if st.button("Predict"):
@@ -81,10 +94,23 @@ if st.button("Predict"):
 
     st.divider()
     st.subheader("Prediction Result")
+    st.caption("The result below is based on the weather conditions you entered.")
+
+    result_col1, result_col2 = st.columns(2)
+
+    with result_col1:
+        if prediction == 1:
+            st.error("⚠️ HIGH RISK")
+        else:
+            st.success("✅ LOW RISK")
+
+    with result_col2:
+        st.metric(
+            label="Flood Probability",
+            value=f"{probability * 100:.2f}%"
+        )
 
     if prediction == 1:
-        st.error("⚠️ Flood Risk Level: HIGH")
-
         st.warning(
             """
             **Safety Recommendation**
@@ -96,10 +122,7 @@ if st.button("Predict"):
             • Keep important documents and emergency supplies ready.
             """
         )
-
     else:
-        st.success("✅ Flood Risk Level: LOW")
-
         st.info(
             """
             **Safety Recommendation**
@@ -109,13 +132,6 @@ if st.button("Predict"):
             • Continue monitoring rainfall and weather conditions.
             """
         )
-
-    st.metric(
-        label="Flood Probability",
-        value=f"{probability * 100:.2f}%"
-    )
-
-    st.progress(float(probability))
 
     st.markdown("---")
 
