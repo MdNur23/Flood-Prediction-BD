@@ -15,22 +15,36 @@ if "history" not in st.session_state:
     st.session_state.history = []
 
 # Sidebar
-st.sidebar.title("Flood Prediction System")
-
-st.sidebar.markdown("---")
-
 st.sidebar.info(
     """
     **Machine Learning Models**
-    - Random Forest
-    - Decision Tree
-    - Logistic Regression
+
+    • Random Forest  
+    • Decision Tree  
+    • Logistic Regression
 
     **Dataset Size**
-    - 2,192 Records
+
+    • 2,192 Records
 
     **Best Model**
-    - Random Forest
+
+    • Random Forest  
+    • Accuracy: 98.18%
+    """
+)
+
+st.sidebar.markdown("---")
+
+st.sidebar.subheader("📌 Project Summary")
+
+st.sidebar.write(
+    """
+    This system predicts flood risk using
+    temperature, rainfall, and humidity.
+
+    Enter the weather conditions and click
+    **Predict** to get the estimated flood risk.
     """
 )
 
@@ -193,6 +207,67 @@ st.image(
     caption="Random Forest Confusion Matrix",
     use_container_width=True
 )
+
+st.markdown("---")
+st.subheader("🎯 Feature Importance")
+
+st.image(
+    "data/processed/feature_importance.png",
+    caption="Decision Tree Feature Importance",
+    use_container_width=True
+)
+
+st.write(
+    "This chart shows the relative importance of Temperature, Rainfall, and Humidity in the Decision Tree model."
+)
+st.markdown("---")
+st.subheader("ℹ️ About This Project")
+
+st.write(
+    """
+    This Flood Prediction System is a Machine Learning-based application
+    designed to estimate flood risk using weather conditions.
+
+    The system uses Temperature, Rainfall, and Humidity as input features
+    and predicts whether the current conditions indicate a high or low
+    flood risk.
+    """
+)
+
+about_col1, about_col2 = st.columns(2)
+
+with about_col1:
+    st.markdown(
+        """
+        **Dataset**
+
+        • 2,192 historical records  
+        • 3 weather features  
+        • Binary flood-risk classification
+        """
+    )
+
+with about_col2:
+    st.markdown(
+        """
+        **Machine Learning Models**
+
+        • Decision Tree  
+        • Random Forest  
+        • Logistic Regression
+        """
+    )
+
+st.info(
+    "Random Forest achieved the highest test accuracy of 98.18% among the evaluated models."
+)
+
+st.markdown("---")
+st.caption(
+    "🌊 Flood Prediction System | Machine Learning Project | Random Forest"
+)
+
+
 
 metric_col1, metric_col2, metric_col3 = st.columns(3)
 
