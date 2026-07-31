@@ -174,6 +174,17 @@ best_model_row = performance_df.loc[
     performance_df["Accuracy"].idxmax()
 ]
 
+st.markdown("---")
+st.subheader("📈 Random Forest ROC Curve")
+
+st.image(
+    "results/roc_curve.png",
+    caption="Random Forest ROC Curve",
+    use_container_width=True
+)
+
+st.write("ROC AUC Score: 0.9871")
+
 metric_col1, metric_col2, metric_col3 = st.columns(3)
 
 with metric_col1:
