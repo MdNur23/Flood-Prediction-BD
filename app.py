@@ -5,6 +5,26 @@ import pandas as pd
 # Load trained model
 model = joblib.load("models/flood_prediction_model.pkl")
 
+st.sidebar.title("Flood Prediction System")
+
+st.sidebar.markdown("---")
+
+
+st.sidebar.info(
+    """
+    **Machine Learning Models**
+    - Random Forest
+    - Decision Tree
+    - Logistic Regression
+
+    **Dataset Size**
+    - 2,192 Records
+
+    **Best Model**
+    - Random Forest
+    """
+)
+
 # Page settings
 st.set_page_config(
     page_title="Flood Prediction System",
@@ -14,6 +34,14 @@ st.set_page_config(
 
 # Title
 st.title("🌊 Flood Prediction System")
+st.markdown(
+    """
+    Welcome to the **Flood Prediction System**.
+
+    Enter the weather conditions below to estimate the flood risk using a trained **Random Forest Machine Learning model**.
+    """
+)
+
 st.write("Predict flood risk using weather conditions.")
 
 # Input fields
@@ -61,4 +89,10 @@ if st.button("Predict"):
     st.metric(
         label="Flood Probability",
         value=f"{probability * 100:.2f}%"
+    )
+
+    st.markdown("---")
+
+    st.caption(
+        "This prediction is generated using a Random Forest Machine Learning model trained on historical weather data."
     )
