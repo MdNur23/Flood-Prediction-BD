@@ -185,6 +185,15 @@ st.image(
 
 st.write("ROC AUC Score: 0.9871")
 
+st.markdown("---")
+st.subheader("📊 Random Forest Confusion Matrix")
+
+st.image(
+    "data/processed/random_forest_confusion_matrix.png",
+    caption="Random Forest Confusion Matrix",
+    use_container_width=True
+)
+
 metric_col1, metric_col2, metric_col3 = st.columns(3)
 
 with metric_col1:
