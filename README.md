@@ -1,50 +1,96 @@
-# Flood Prediction BD
+# 🌊 Flood Prediction System
 
-A Machine Learning based Flood Prediction System using historical weather data from Bangladesh.
+A Machine Learning-based Flood Prediction System developed using Python and Streamlit to estimate flood risk based on weather conditions.
 
-## Project Overview
+## 📌 Features
 
-This project predicts flood risk using weather parameters such as:
+- Flood Risk Prediction (High / Low)
+- Flood Probability
+- Prediction History
+- Clear History
+- Safety Recommendations
+- Model Performance Dashboard
+- ROC Curve
+- Confusion Matrix
+- Feature Importance
+- Interactive Streamlit Web Application
 
-- Temperature
-- Rainfall
-- Humidity
+---
 
-Several Machine Learning algorithms were trained and compared to identify the best performing model.
+## 🤖 Machine Learning Models
 
-## Technologies Used
-
-- Python
-- Pandas
-- NumPy
-- Matplotlib
-- Scikit-learn
-- Joblib
-
-## Project Structure
-
-```
-Flood-Prediction-BD/
-│
-├── data/
-├── docs/
-├── models/
-├── src/
-├── requirements.txt
-├── README.md
-└── .gitignore
-```
-
-## Machine Learning Models
-
-- Decision Tree
 - Random Forest
+- Decision Tree
 - Logistic Regression
 
-## Best Model
+---
 
-Decision Tree
+## 📊 Dataset
 
-## Author
+- Total Records: 2,192
+- Features:
+  - Temperature
+  - Rainfall
+  - Humidity
+- Target:
+  - Flood Risk
 
-Md Nur
+---
+
+## 🛠 Technologies Used
+
+- Python
+- Streamlit
+- Pandas
+- Scikit-learn
+- Matplotlib
+- Seaborn
+- Joblib
+
+---
+
+## 🚀 How to Run
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/MdNur23/Flood-Prediction-BD.git
+```
+
+### 2. Open the Project
+
+```bash
+cd Flood-Prediction-BD
+```
+
+### 3. Install Dependencies
+
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Run the Application
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## 📈 Model Performance
+
+| Model | Accuracy |
+|-------|---------:|
+| Random Forest | 98.18% |
+| Logistic Regression | 97.95% |
+| Decision Tree | 96.58% |
+
+---
+
+## 📷 Application Screenshot
+
+![Flood Prediction Dashboard](assets/dashboard.png)
+
+## 📄 License
+
+This project is developed for educational and research purposes.
